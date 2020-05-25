@@ -6,3 +6,8 @@ app = Flask(__name__)
 @app.route('/')
 def root():
 	return "Welcome!"
+
+#Another Basic Route
+@app.route('/homepage')
+def homepage():
+	return render_template('index.html')
