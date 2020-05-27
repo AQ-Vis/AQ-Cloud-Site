@@ -2,5 +2,5 @@ import unittest
 
 import app
 
-def homepage_test_1():
+def test_load():
     assert app.root() == "Welcome!"
