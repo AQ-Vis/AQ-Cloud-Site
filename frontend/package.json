@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/srujandeshpande/AQ-Cloud-Site/issues"
   },
-  "homepage": "https://github.com/srujandeshpande/AQ-Cloud-Site#readme"
+  "homepage": "https://github.com/srujandeshpande/AQ-Cloud-Site#readme",
+  "dependencies": {
+    "ol": "^6.3.1"
+  }
 }
