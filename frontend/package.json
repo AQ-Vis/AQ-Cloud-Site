@@ -4,7 +4,9 @@
   "description": "Frontend code for AQ site ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "build": "parcel build --public-url . index.html"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   "homepage": "https://github.com/srujandeshpande/AQ-Cloud-Site#readme",
   "dependencies": {
     "chart.js": "^2.9.3",
-    "ol": "^6.3.1"
+    "ol": "^6.3.1",
+    "parcel-bundler": "^1.12.4"
   }
 }
