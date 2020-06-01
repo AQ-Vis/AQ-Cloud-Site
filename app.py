@@ -27,7 +27,7 @@ def input_data():
 
 @app.route('/api/get_data')
 def get_data():
-	data = {'count':5,'data':[{'device_id':1,'datetime':'2020-05-30-13-45-05','ppm':450},{'device_id':1,'datetime':'2020-05-30-13-46-15','ppm':455},{'device_id':1,'datetime':'2020-05-30-13-47-18','ppm':451},{'device_id':1,'datetime':'2020-05-30-13-48-01','ppm':443},{'device_id':1,'datetime':'2020-05-30-13-49-23','ppm':453}]}
+	data = {'count':5,'data':[{'device_id':1,'datetime':'2020-05-30 13:45:05','ppm':450},{'device_id':1,'datetime':'2020-05-30 13:46:15','ppm':455},{'device_id':1,'datetime':'2020-05-30 13:47:18','ppm':451},{'device_id':1,'datetime':'2020-05-30 13:48:01','ppm':443},{'device_id':1,'datetime':'2020-05-30 13:49:23','ppm':453}]}
 	return data
 
 @app.route('/api/get_locations')
