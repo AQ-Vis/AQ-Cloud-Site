@@ -8,13 +8,13 @@
           height: 250px;
         }
   </style>
-  <link rel="stylesheet" href="{{url_for('static', filename='css/Chart.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/Chart.min.css')}}">
 </head>
     <body>
       <canvas id="myChart" width="800" height="450"></canvas>
       <div id="map"></div>
       <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
-      <script src="{{url_for('static', filename='js/Chart.js')}}"></script>
+      <script src="{{url_for('static', filename='js/Chart.min.js')}}"></script>
       <script src="{{url_for('static', filename='js/chartloader.js')}}"></script>
     </body>
 </html>
