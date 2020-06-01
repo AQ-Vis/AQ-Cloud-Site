@@ -2,17 +2,12 @@ from flask import Flask, render_template, request, Response
 
 app = Flask(__name__)
 
-#Basic Route
-@app.route('/')
-def root():
-	return "Welcome to AQ Cloud Site Visualization"
-
 @app.route('/test/test')
 def test():
 	return "Works"
 
 #Another Basic Route
-@app.route('/homepage')
+@app.route('/')
 def homepage():
 	return render_template('index.html')
 
@@ -34,3 +29,15 @@ def get_data():
 def get_locations():
 	data = {'count':3,'data':[{'device_id':1,'lat':30.05,'long':-70.05},{'device_id':2,'lat':30.15,'long':-7.15},{'device_id':3,'lat':30.25,'long':-70.25}]}
 	return data
+
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
