@@ -1,6 +1,20 @@
-from flask import Flask, render_template, request, Response
+import pymongo
+from bson.json_util import dumps
+import json
+from flask import Flask, request, render_template, session, redirect, url_for, flash, Response, abort, render_template_string, send_from_directory
+from flask_cors import CORS
+import requests
+from datetime import date
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
+CORS(app)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.secret_key = b'\xd2(*K\xa0\xa8\x13]g\x1e9\x88\x10\xb0\xe0\xcc'
+
+#Loads the Database and Collections
+mongo = pymongo.MongoClient('mongodb+srv://admin:temporarypassword@cluster0-4qcuj.mongodb.net/test?retryWrites=true&w=majority', maxPoolSize=50, connect=True)
+db = pymongo.database.Database(mongo, 'aq_db_1')
 
 @app.route('/test/test')
 def test():
@@ -19,6 +33,28 @@ def input_data():
 	ppm = int(inputData['ppm'])
 	print(ppm,device_id)
 	return Response(status=200)
+
+@app.route('/api/get_device_list')
+def get_device_list():
+	Device_Info = pymongo.collection.Collection(db, 'Device_Info')
+	devices = json.loads(dumps(Device_Info.find()))
+    data = {'count':len(devices), data:devices}
+	return data
+
+@app.route('/api/add_sensor_data', methods=['POST'])
+def add_sensor_data():
+	inputData = request.json
+	Device_Info = pymongo.collection.Collection(db, 'Device_Info')
+	devices = json.loads(dumps(Device_Info.find({'device_id':inputData['device_id']})))
+	today = date.today()
+	currdate = today.strftime("%d-%m-%Y")
+	lastcontact = currdate + str(' ') + str(inputData['timestamp'])
+	if(len(devices) == 0):
+		Device_Info.insert_one({'device_id':inputData['device_id'], 'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['longitude'], 'last_longitude':inputData['longitude']})
+	else:
+		Device_Info.update_one({'$set':}{'device_id':inputData['device_id'], 'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['longitude'], 'last_longitude':inputData['longitude']})
+	data = {'count':len(devices), data:devices}
+	return data
 
 @app.route('/api/get_data')
 def get_data():
