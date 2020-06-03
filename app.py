@@ -54,6 +54,7 @@ def add_sensor_data():
 	else:
 		Device_Info.update_one({'$set':}{'device_id':inputData['device_id'], 'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['longitude'], 'last_longitude':inputData['longitude']})
 	data = {'count':len(devices), data:devices}
+	Sensor_Info.insert_one({'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'latitude':inputData['longitude'], 'longitude':inputData['longitude'], 'aq1_pm10':inputData['aq1_pm10'], 'aq1_pm75':inputData['aq1_pm75'], 'aq1_pm25':inputData['aq1_pm25'], 'aq2_pm10':inputData['aq2_pm10'], 'aq2_pm75':inputData['aq2_pm75'], 'aq2_pm25':inputData['aq2_pm25'], 'aq3_pm10':inputData['aq3_pm10'], 'aq3_pm75':inputData['aq3_pm75'], 'aq3_pm25':inputData['aq3_pm25'])
 	return data
 
 @app.route('/api/get_data')
