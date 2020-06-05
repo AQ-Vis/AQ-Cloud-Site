@@ -23,7 +23,7 @@ db = pymongo.database.Database(mongo, 'aq_db_1')
 def get_device_list():
 	Device_Info = pymongo.collection.Collection(db, 'Device_Info')
 	devices = json.loads(dumps(Device_Info.find()))
-	data = {'count':len(devices), data:devices}
+	data = {'count':len(devices), 'data':devices}
 	return data
 
 
