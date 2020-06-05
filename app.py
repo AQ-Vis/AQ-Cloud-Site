@@ -38,9 +38,9 @@ def add_sensor_data():
 	if(len(devices) == 0):
 		Device_Info.insert_one({'device_id':inputData['device_id'], 'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['longitude'], 'last_longitude':inputData['longitude']})
 	else:
-		Device_Info.update_one({'device_id':inputData['device_id']}, {'$set': {'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['longitude'], 'last_longitude':inputData['longitude']}})
+		Device_Info.update_one({'device_id':inputData['device_id']}, {'$set': {'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['latitude'], 'last_longitude':inputData['longitude']}})
 	Sensor_Info = pymongo.collection.Collection(db, inputData['device_id'])
-	Sensor_Info.insert_one({'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'latitude':inputData['longitude'], 'longitude':inputData['longitude'], 'aq1':{'pm10':inputData['aq1']['pm10'], 'pm75':inputData['aq1']['pm75'], 'pm25':inputData['aq1']['pm25']}, 'aq2':{'pm10':inputData['aq2']['pm10'], 'pm75':inputData['aq2']['pm75'], 'pm25':inputData['aq2']['pm25']}, 'aq3':{'pm10':inputData['aq3']['pm10'], 'pm75':inputData['aq3']['pm75'], 'pm25':inputData['aq3']['pm25']}})
+	Sensor_Info.insert_one({'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'latitude':inputData['latitude'], 'longitude':inputData['longitude'], 'aq1':{'pm10':inputData['aq1']['pm10'], 'pm75':inputData['aq1']['pm75'], 'pm25':inputData['aq1']['pm25']}, 'aq2':{'pm10':inputData['aq2']['pm10'], 'pm75':inputData['aq2']['pm75'], 'pm25':inputData['aq2']['pm25']}, 'aq3':{'pm10':inputData['aq3']['pm10'], 'pm75':inputData['aq3']['pm75'], 'pm25':inputData['aq3']['pm25']}})
 	return Response(status=200)
 
 
