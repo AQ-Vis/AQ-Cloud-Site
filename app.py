@@ -19,12 +19,37 @@ mongo = pymongo.MongoClient('mongodb://127.0.0.1:27017', maxPoolSize=50, connect
 db = pymongo.database.Database(mongo, 'aq_db_1')
 
 
+@app.route('/api/add_new_device', methods=['POST'])
+def add_new_device():
+	#Maybe some authentication can be added to prevent unauthorized people from adding new devices
+	inputData = request.json
+	Device_Info = pymongo.collection.Collection(db, 'Device_Info')
+	devices = json.loads(dumps(Device_Info.find({'device_id': inputData['device_id']})))
+	if len(devices) == 0:
+		Device_Info.insert_one({'device_id':inputData['device_id']})
+		return Response(status=200)
+	else:
+		return Response(status=409)
+
+
 @app.route('/api/get_device_list')
 def get_device_list():
 	Device_Info = pymongo.collection.Collection(db, 'Device_Info')
 	devices = json.loads(dumps(Device_Info.find()))
 	data = {'count':len(devices), 'data':devices}
 	return data
+
+
+@app.route('/api/get_sensor_data', methods=['POST'])
+def get_senor_data():
+	inputData = request.json
+	if 'device_id' in inputData:
+		Sensor_Info = pymongo.collection.Collection(db, inputData['device_id'])
+		data = json.loads(dumps(Sensor_Info.find()))
+		data_json = {'count':len(data), 'data':data}
+		return data_json
+	else:
+		return Response(status=404)
 
 
 @app.route('/api/add_sensor_data', methods=['POST'])
@@ -35,12 +60,13 @@ def add_sensor_data():
 	today = date.today()
 	currdate = today.strftime("%d-%m-%Y")
 	lastcontact = currdate + str(' ') + str(inputData['timestamp'])
+	Device_Info.insert_one({'device_id':inputData['device_id'], 'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['longitude'], 'last_longitude':inputData['longitude'], 'last_battery':inputData['battery_level']})
 	if(len(devices) == 0):
-		Device_Info.insert_one({'device_id':inputData['device_id'], 'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['longitude'], 'last_longitude':inputData['longitude']})
+		return Response(status=403)
 	else:
-		Device_Info.update_one({'device_id':inputData['device_id']}, {'$set': {'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['latitude'], 'last_longitude':inputData['longitude']}})
+		Device_Info.update_one({'device_id':inputData['device_id']}, {'$set': {'last_contact':lastcontact, 'last_altitude':inputData['altitude'], 'last_latitude':inputData['latitude'], 'last_longitude':inputData['longitude'], 'last_battery':inputData['battery_level']}})
 	Sensor_Info = pymongo.collection.Collection(db, inputData['device_id'])
-	Sensor_Info.insert_one({'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'latitude':inputData['latitude'], 'longitude':inputData['longitude'], 'aq1':{'pm10':inputData['aq1']['pm10'], 'pm75':inputData['aq1']['pm75'], 'pm25':inputData['aq1']['pm25']}, 'aq2':{'pm10':inputData['aq2']['pm10'], 'pm75':inputData['aq2']['pm75'], 'pm25':inputData['aq2']['pm25']}, 'aq3':{'pm10':inputData['aq3']['pm10'], 'pm75':inputData['aq3']['pm75'], 'pm25':inputData['aq3']['pm25']}})
+	Sensor_Info.insert_one({'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'latitude':inputData['latitude'], 'longitude':inputData['longitude'], 'aq1':{'pm10':inputData['aq1']['pm10'], 'pm75':inputData['aq1']['pm75'], 'pm25':inputData['aq1']['pm25']}, 'aq2':{'pm10':inputData['aq2']['pm10'], 'pm75':inputData['aq2']['pm75'], 'pm25':inputData['aq2']['pm25']}, 'aq3':{'pm10':inputData['aq3']['pm10'], 'pm75':inputData['aq3']['pm75'], 'pm25':inputData['aq3']['pm25']}, 'battery_level':inputData['battery_level']})
 	return Response(status=200)
 
 
