@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 
-@app.route('/api/add_new_device', methods=['POST'])
+@app.route('/add_new_device', methods=['POST'])
 def add_new_device():
 	#Maybe some authentication can be added to prevent unauthorized people from adding new devices
 	inputData = request.json
@@ -22,6 +22,17 @@ def add_new_device():
 	currdata = es.search(index='device_info', id=inputData['device_id'])
 
 	es.index(index='device_info', id=inputData['device_id'], body=data)
+	return Response(status=200)
+
+@app.route('/add_sensor_data', methods=['POST'])
+def add_sensor_data():
+	inputData = request.json
+	device_id = inputData['device_id']
+	today = date.today()
+	currdate = today.strftime("%d-%m-%Y")
+	lastcontact = currdate + str(' ') + str(inputData['timestamp'])
+	data = {'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'latitude':inputData['latitude'], 'longitude':inputData['longitude'], 'aq1':{'pm10':inputData['aq1']['pm10'], 'pm75':inputData['aq1']['pm75'], 'pm25':inputData['aq1']['pm25']}, 'aq2':{'pm10':inputData['aq2']['pm10'], 'pm75':inputData['aq2']['pm75'], 'pm25':inputData['aq2']['pm25']}, 'aq3':{'pm10':inputData['aq3']['pm10'], 'pm75':inputData['aq3']['pm75'], 'pm25':inputData['aq3']['pm25']}, 'battery_level':inputData['battery_level']}
+	es.index(index=device_id, body=data)
 	return Response(status=200)
 
 #Another Basic Route
