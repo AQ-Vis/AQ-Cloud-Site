@@ -1,4 +1,4 @@
-#import pymongo
+import pymongo
 from bson.json_util import dumps
 import json
 from flask import Flask, request, render_template, session, redirect, url_for, flash, Response, abort, render_template_string, send_from_directory
@@ -6,7 +6,6 @@ from flask import Flask, request, render_template, session, redirect, url_for, f
 import requests
 from datetime import date
 from bson.objectid import ObjectId
-from elasticsearch import Elasticsearch
 
 app = Flask(__name__)
 #CORS(app)
@@ -17,28 +16,23 @@ app = Flask(__name__)
 #mongo = pymongo.MongoClient('mongodb+srv://admin:temporarypassword@cluster0-4qcuj.mongodb.net/test?retryWrites=true&w=majority', maxPoolSize=50, connect=True)
 #db = pymongo.database.Database(mongo, 'aq_db_1')
 
-es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
-
-#mongo = pymongo.MongoClient('mongodb://127.0.0.1:27017', maxPoolSize=50, connect=True)
-#db = pymongo.database.Database(mongo, 'aq_db_1')
+mongo = pymongo.MongoClient('mongodb://127.0.0.1:27017', maxPoolSize=50, connect=True)
+db = pymongo.database.Database(mongo, 'aq_db_1')
 
 
 @app.route('/api/add_new_device', methods=['POST'])
 def add_new_device():
 	#Maybe some authentication can be added to prevent unauthorized people from adding new devices
 	inputData = request.json
-	data = {'device_id':inputData['device_id']}
-	es.index(index='device_info', id=inputData['device_id'], body=data)
-	return Response(status=200)
-	#Device_Info = pymongo.collection.Collection(db, 'Device_Info')
-	#devices = json.loads(dumps(Device_Info.find({'device_id': inputData['device_id']})))
-	#if len(devices) == 0:
-	#	Device_Info.insert_one({'device_id':inputData['device_id']})
-	#	return Response(status=200)
-	#else:
-	#	return Response(status=409)
+	Device_Info = pymongo.collection.Collection(db, 'Device_Info')
+	devices = json.loads(dumps(Device_Info.find({'device_id': inputData['device_id']})))
+	if len(devices) == 0:
+		Device_Info.insert_one({'device_id':inputData['device_id']})
+		return Response(status=200)
+	else:
+		return Response(status=409)
 
-"""
+
 @app.route('/api/get_device_list')
 def get_device_list():
 	Device_Info = pymongo.collection.Collection(db, 'Device_Info')
@@ -76,12 +70,15 @@ def add_sensor_data():
 	Sensor_Info.insert_one({'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'latitude':inputData['latitude'], 'longitude':inputData['longitude'], 'aq1':{'pm10':inputData['aq1']['pm10'], 'pm75':inputData['aq1']['pm75'], 'pm25':inputData['aq1']['pm25']}, 'aq2':{'pm10':inputData['aq2']['pm10'], 'pm75':inputData['aq2']['pm75'], 'pm25':inputData['aq2']['pm25']}, 'aq3':{'pm10':inputData['aq3']['pm10'], 'pm75':inputData['aq3']['pm75'], 'pm25':inputData['aq3']['pm25']}, 'battery_level':inputData['battery_level']})
 	return Response(status=200)
 
-"""
+
 #------------------------------
 #Other stuff
-"""
 @app.after_request
 def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
@@ -91,10 +88,8 @@ def add_header(r):
 @app.route('/test/test')
 def test():
 	return "Works"
-"""
+
 #Another Basic Route
 @app.route('/')
 def homepage():
-	es.index(index='my_index', id=1, body={'text': 'this is a test'})
-	return Response(status=200)
-	#return render_template('index.html')
+	return render_template('index.html')
