@@ -35,6 +35,11 @@ def add_sensor_data():
 	es.index(index=device_id, body=data)
 	return Response(status=200)
 
+@app.route('/get_data', methods=['GET'])
+def get_data():
+	data = es.search()
+	return data
+
 #Another Basic Route
 @app.route('/')
 def homepage():
