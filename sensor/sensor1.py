@@ -5,9 +5,10 @@ from time import sleep
 import random
 
 url = 'http://localhost:5000/add_sensor_data'
+#url = 'http://34.71.43.23:8000/add_sensor_data'
 
 data = {
-    "device_id": "autotest001",
+    "device_id": "gcptest004",
     "timestamp": "",
     "altitude": 400.56,
     "latitude": 12.976750,
@@ -32,7 +33,7 @@ data = {
 
 while True:
     now = datetime.now()
-    currtime = now.strftime("%H:%M:%S:%f")[0:11]
+    currtime = now.strftime("%H:%M:%S")[0:11]
     data['timestamp'] = currtime
     data['aq1']['pm10'] = random.uniform(50,65)
     data['aq1']['pm75'] = random.uniform(110,180)
@@ -45,4 +46,4 @@ while True:
     data['aq3']['pm25'] = random.uniform(238,540)
     x = requests.post(url, json = data)
     print(x.status_code)
-    sleep(10)
+    sleep(1)
