@@ -8,3 +8,7 @@ GRAPH2
 
 GRAPH3
 <iframe src="http://35.193.81.157:5601/app/kibana#/visualize/edit/c9b14770-b175-11ea-b13a-81b01177ea41?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A36000000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" height="600" width="800"></iframe>
+
+
+GRAPH4
+<iframe src="http://35.193.81.157:5601/app/kibana#/visualize/edit/75534470-b176-11ea-b13a-81b01177ea41?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A36000000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" height="600" width="800"></iframe>
