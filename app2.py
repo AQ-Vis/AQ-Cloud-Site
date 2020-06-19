@@ -12,7 +12,7 @@ app = Flask(__name__)
 #CORS(app)
 #app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
-es = Elasticsearch([{'host': '104.198.178.146', 'port': 9200}])
+es = Elasticsearch([{'host': '34.71.43.23', 'port': 9200}])
 
 @app.route('/add_new_device', methods=['POST'])
 def add_new_device():
@@ -31,7 +31,7 @@ def add_sensor_data():
 	today = date.today()
 	currdate = today.strftime("%d-%m-%Y")
 	lastcontact = currdate + str(' ') + str(inputData['timestamp'])
-	data = {'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'location':{'lat':inputData['latitude'], 'lon':inputData['longitude']}, 'aq1':{'pm10':inputData['aq1']['pm10'], 'pm75':inputData['aq1']['pm75'], 'pm25':inputData['aq1']['pm25']}, 'aq2':{'pm10':inputData['aq2']['pm10'], 'pm75':inputData['aq2']['pm75'], 'pm25':inputData['aq2']['pm25']}, 'aq3':{'pm10':inputData['aq3']['pm10'], 'pm75':inputData['aq3']['pm75'], 'pm25':inputData['aq3']['pm25']}, 'battery_level':inputData['battery_level']}
+	data = {'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'latitude':inputData['latitude'], 'longitude':inputData['longitude'], 'aq1':{'pm10':inputData['aq1']['pm10'], 'pm75':inputData['aq1']['pm75'], 'pm25':inputData['aq1']['pm25']}, 'aq2':{'pm10':inputData['aq2']['pm10'], 'pm75':inputData['aq2']['pm75'], 'pm25':inputData['aq2']['pm25']}, 'aq3':{'pm10':inputData['aq3']['pm10'], 'pm75':inputData['aq3']['pm75'], 'pm25':inputData['aq3']['pm25']}, 'battery_level':inputData['battery_level']}
 	mn = es.index(index=device_id, body=data)
 	print(mn)
 	return Response(status=200)
