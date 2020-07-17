@@ -8,7 +8,7 @@ url = 'http://localhost:5000/add_sensor_data'
 #url = 'http://34.71.43.23:8000/add_sensor_data'
 
 data = {
-    "device_id": "gcptest006",
+    "device_id": "gcptest007",
     "timestamp": "",
     "altitude": 400.56,
     "latitude": 11.976750,
@@ -37,10 +37,10 @@ while True:
     data['latitude']+=0.001
     data['longitude']+=0.001
     data['timestamp'] = currtime
-    data['aq1']['pm10'] = random.uniform(50,65)
+    data['aq1']['pm10'] = random.uniform(40,80)
     data['aq1']['pm75'] = random.uniform(110,180)
     data['aq1']['pm25'] = random.uniform(10,14)
-    data['aq2']['pm10'] = random.uniform(150,165)
+    data['aq2']['pm10'] = random.uniform(150,265)
     data['aq2']['pm75'] = random.uniform(10,80)
     data['aq2']['pm25'] = random.uniform(210,214)
     data['aq3']['pm10'] = random.uniform(0,1)

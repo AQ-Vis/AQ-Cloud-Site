@@ -50,6 +50,6 @@ def get_data():
 #Another Basic Route
 @app.route('/')
 def homepage():
-	es.index(index='my_index', id=1, body={'text': 'this is a test'})
-	return Response(status=200)
+	val=es.index(index='my_index', id=1, body={'text': 'this is a test'})
+	return val
 	#return render_template('index.html')
