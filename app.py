@@ -33,7 +33,7 @@ def add_sensor_data():
 	inputData = request.json
 	device_id = inputData['device_id']
 	today = date.today()
-	currdate = today.strftime("%d-%m-%Y")
+	#currdate = today.strftime("%d-%m-%Y")
 	currdate = today.strftime("%Y-%m-%d")
 	lastcontact = currdate + str("T") + str(inputData['timestamp'])
 	data = {'device_id':inputData['device_id'], 'timestamp':lastcontact, 'altitude':inputData['altitude'], 'location':{'lat':inputData['latitude'], 'lon':inputData['longitude']}, 'aq1':{'pm10':inputData['aq1']['pm10'], 'pm75':inputData['aq1']['pm75'], 'pm25':inputData['aq1']['pm25']}, 'aq2':{'pm10':inputData['aq2']['pm10'], 'pm75':inputData['aq2']['pm75'], 'pm25':inputData['aq2']['pm25']}, 'aq3':{'pm10':inputData['aq3']['pm10'], 'pm75':inputData['aq3']['pm75'], 'pm25':inputData['aq3']['pm25']}, 'battery_level':inputData['battery_level']}

@@ -20,8 +20,8 @@ PES Innovation Lab's Internship 2020 Project - Air Quality Cloud Site Visualizat
 - gcptest004
 - 005
 - 006
-- 007
-- gcptest101 - Created for NextGenLabs demo 18 July 2020
+- 007, 008 for Demo
+- loadtest101 load testing
 
 ### When creating new sensor make new index
 send directly to Elasticsearch  
