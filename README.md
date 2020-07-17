@@ -41,3 +41,10 @@ Ex: http://35.209.87.44:9200/gcptest007
     }
 }
 ```
+
+### Graphs on Kibaba
+1. Create index pattern
+2. **DO NOT** select timestamp field when it asks
+3. Go to Visualization and choose line graph
+4. Y axis - Average - Field choose any 1
+5. Buckets - X axis - Aggregation - Date Histogram - timestamp - 5s (or anything)
