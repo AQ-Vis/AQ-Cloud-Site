@@ -33,7 +33,7 @@ data = {
 
 while True:
     now = datetime.now()
-    currtime = now.strftime("%H:%M:%S")[0:11]
+    currtime = now.strftime("%H:%M:%S.%f")
     data['timestamp'] = currtime
     data['aq1']['pm10'] = random.uniform(50,65)
     data['aq1']['pm75'] = random.uniform(110,180)
