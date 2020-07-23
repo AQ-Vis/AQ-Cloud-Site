@@ -3,13 +3,10 @@
 #flask run
 #--------------------------------------------------#
 
-from bson.json_util import dumps
 import json
 from flask import Flask, request, render_template, session, redirect, url_for, flash, Response, abort, render_template_string, send_from_directory
-#from flask_cors import CORS
 import requests
 from datetime import date
-from bson.objectid import ObjectId
 from elasticsearch import Elasticsearch
 
 app = Flask(__name__)
@@ -53,3 +50,7 @@ def homepage():
 	val=es.index(index='my_index', id=1, body={'text': 'this is a test'})
 	return val
 	#return render_template('index.html')
+
+@app.route('/test')
+def test():
+	return("Works")
