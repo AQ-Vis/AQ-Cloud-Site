@@ -48,3 +48,13 @@ Ex: http://35.209.87.44:9200/gcptest007
 3. Go to Visualization and choose line graph
 4. Y axis - Average - Field choose any 1
 5. Buckets - X axis - Aggregation - Date Histogram - timestamp - 5s (or anything)
+
+
+### Docker commands for Flask Server
+1. docker build --tag aqserver:1.0 .
+2. docker run -p 8000:8000 aqserver:1.0
+
+
+### Docker commands for Mock sensor
+1. docker build --tag aqmocksensor:1.0 .
+2. docker run aqmocksensor:1.0
