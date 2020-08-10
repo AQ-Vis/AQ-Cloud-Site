@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+spec:
+  ports:
+  - name: normal
+    port: 9200
+    targetPort: 9200
+  - name: normal1
+    port: 9300
+    targetPort: 9300
+  selector:
+    target: elasticsearchpod
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibanapod
+spec:
+  ports:
+  - name: normal
+    port: 5601
+    targetPort: 5601
+  selector:
+    target: kibanapod
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logstashpod
+spec:
+  ports:
+  - name: normal
+    port: 9500
+    targetPort: 9500
+  selector:
+    target: logstashpod
+  type: LoadBalancer
+
+---

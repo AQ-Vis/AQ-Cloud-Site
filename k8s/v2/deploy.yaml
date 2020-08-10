@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearchpod
+  labels:
+    app: server
+    target: elasticsearchpod
+spec:
+  selector:
+    matchLabels:
+      target: elasticsearchpod
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        target: elasticsearchpod
+    spec:
+      containers:
+        - name: hydraa
+          image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+          imagePullPolicy: Always
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
+            - name: discovery.seed_hosts
+              value: "127.0.0.1"
+            - name: discovery.type
+              value: single-node
+          ports:
+            - containerPort: 9200
+            - containerPort: 9300
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibanapod
+  labels:
+    app: server
+    target: kibanapod
+spec:
+  selector:
+    matchLabels:
+      target: kibanapod
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        target: kibanapod
+    spec:
+      containers:
+        - name: hydraa
+          image: docker.elastic.co/kibana/kibana:7.8.1
+          imagePullPolicy: Always
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
+          ports:
+            - containerPort: 5601
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstashpod
+  labels:
+    app: server
+    target: logstashpod
+spec:
+  selector:
+    matchLabels:
+      target: logstashpod
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        target: logstashpod
+    spec:
+      containers:
+        - name: hydraa
+          image: docker.elastic.co/logstash/logstash:7.8.1
+          imagePullPolicy: Always
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
+          ports:
+            - containerPort: 9500
+---
