@@ -58,3 +58,17 @@ Ex: http://35.209.87.44:9200/gcptest007
 ### Docker commands for Mock sensor
 1. docker build --tag aqmocksensor:1.0 .
 2. docker run aqmocksensor:1.0
+
+### Set ELASTICSEARCH_URL as env variable for Flask Server
+- Bash:
+```bash
+export ELASTICSEARCH_URL=http://192.168.1.1
+```
+- CMD:
+```bash
+set ELASTICSEARCH_URL=http://192.168.1.1
+```
+- PowerShell:
+```bash
+$env:ELASTICSEARCH_URL="http://192.168.1.1"
+```
