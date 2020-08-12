@@ -24,7 +24,7 @@ app = Flask(__name__)
 
 es = Elasticsearch([{'host': es_url, 'port': 9200}])
 
-@app.route('/add_new_device/<device_id>', methods=['GET'])
+@app.route('/device/<device_id>', methods=['GET'])
 def add_new_device(device_id):
 	#Maybe some authentication can be added to prevent unauthorized people from adding new devices
 	data = {
@@ -44,7 +44,7 @@ def add_new_device(device_id):
 
 
 
-@app.route('/add_sensor_data', methods=['POST'])
+@app.route('/sensor/data', methods=['POST'])
 def add_sensor_data():
 	inputData = request.json
 	device_id = inputData['device_id']
@@ -55,7 +55,7 @@ def add_sensor_data():
 	mn = es.index(index=device_id, body=data)
 	return Response(status=200)
 
-@app.route('/get_data', methods=['GET'])
+@app.route('/data', methods=['GET'])
 def get_data():
 	data = es.search()
 	return data
