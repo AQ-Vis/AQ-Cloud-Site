@@ -72,3 +72,8 @@ set ELASTICSEARCH_URL=http://192.168.1.1
 ```bash
 $env:ELASTICSEARCH_URL="http://192.168.1.1"
 ```
+
+### To run the server
+```bash
+sudo docker run -e ELASTICSEARCH_URL='http://104.154.64.30' -p 8000:8000 srujandeshpande/aqvis-server:1.1
+```

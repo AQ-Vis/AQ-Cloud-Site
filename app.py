@@ -16,13 +16,19 @@ else:
 	print("Please provide Elasticsearch URL as Environment Variable")
 	exit()
 
+if es_url[0:7] == 'http://':
+	es_url_trim = es_url[7:]
+else:
+	es_url_trim = es_url
+	es_url = "http://" + es_url
+
 app = Flask(__name__)
 #CORS(app)
 #app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 #es_url = "104.196.0.115"
 
-es = Elasticsearch([{'host': es_url, 'port': 9200}])
+es = Elasticsearch([{'host': es_url_trim, 'port': 9200}])
 
 @app.route('/device/<device_id>', methods=['GET'])
 def add_new_device(device_id):
